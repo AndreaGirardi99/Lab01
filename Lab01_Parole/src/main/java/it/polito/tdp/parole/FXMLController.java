@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 
 public class FXMLController {
 	
-	Parole elenco ;
+	Parole elenco;
 
     @FXML
     private ResourceBundle resources;
@@ -33,15 +33,38 @@ public class FXMLController {
     private Button btnReset;
 
     @FXML
+    private TextArea txtArea;
+    
+    @FXML
+    private Button btnCancella;
+
+    @FXML
     void doInsert(ActionEvent event) {
-    	// TODO
+    	long start = System.nanoTime();
+    	elenco.addParola(txtParola.getText());
+    	txtResult.setText(elenco.getElenco().toString());
+    	txtParola.clear();
+    	long end = System.nanoTime();
+    	txtArea.setText("Tempo: "+ (end-start)/1e9);
     }
 
     @FXML
     void doReset(ActionEvent event) {
-    	// TODO
+    	long start = System.nanoTime();
+    	txtResult.clear();
+    	elenco.reset();
+    	long end = System.nanoTime();
+    	txtArea.setText("Tempo: "+ (end-start)/1e9);
     }
 
+    @FXML
+    void doCancella(ActionEvent event) {
+    	long start = System.nanoTime();
+    	elenco.cancellaParola(txtResult.getSelectedText());
+      	txtResult.setText(elenco.getElenco().toString());
+      	long end = System.nanoTime();
+      	txtArea.setText("Tempo: "+ (end-start)/1e9);
+    }
     @FXML
     void initialize() {
         assert txtParola != null : "fx:id=\"txtParola\" was not injected: check your FXML file 'Scene.fxml'.";
